@@ -5,7 +5,7 @@ const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.^*()%!-])[A-Z
 
 export const createUserAccount = (userData) => {
   return async (dispatch) => {
-    const fetchData = async () => {
+    const sendRequest = async () => {
       const response = await fetch("https://lti-assessment-default-rtdb.firebaseio.com/userAccounts.json",
                 {
                     method: 'POST',
@@ -21,14 +21,12 @@ export const createUserAccount = (userData) => {
       if (!response.ok) {
         throw new Error('Could not fetch cart data!');
       }
-
       const data = await response.json();
-
       return data;
     };
 
     try {
-      const cartData = await fetchData();
+      const cartData = await sendRequest();
       dispatch(authActions.showNotification({
         type: "SUCCESS",
         msg: "Account created successfully."
@@ -41,40 +39,6 @@ export const createUserAccount = (userData) => {
     }
   };
 };
-
-export const logIn = (userData) => {
-  return async (dispatch) => {
-    const fetchData = async () => {
-      const response = await fetch("https://lti-assessment-default-rtdb.firebaseio.com/login.json",
-                {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        email: userData.email,
-                        password: userData.password,
-                    }),
-                }
-            );
-
-      if (!response.ok) {
-        throw new Error('Could not fetch cart data!');
-      }
-
-      const data = await response.json();
-
-      return data;
-    };
-
-    try {
-        const cartData = await fetchData();
-        dispatch(authActions.showNotification(true));
-      
-    } catch (error) {
-        dispatch(authActions.showNotification(false));
-    }
-  };
-};
-
-
 
 export const getUserAccounts = () => {
   return async (dispatch) => {
@@ -112,12 +76,12 @@ export const getUserAccounts = () => {
 };
 
 
-export const validateUser = function (email, password, username, list, isUserExist = true) {
+export const validateUser = function (email, password, username, list, isUserExist) {
     const validationObj = {
         isEmailValid: !(email === "" || !email.includes("@")),
         isPasswordValid: !(password === "" || !password.match(passwordRegex)),
         isUsernameValid: username !== "",
-        isUserExist: isUserExist
+        isUserExist: false
     };
     
     if (username !== "" && password !=="" && list.length > 0) {

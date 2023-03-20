@@ -38,7 +38,7 @@ function SignUpPgae(props) {
     }
 
     const createUser = async function (event) {
-        const userData = validateUser(email, password, username, userList, false);
+        const userData = validateUser(email, password, username, userList);
         setIsPasswordValid(userData.isPasswordValid);
         setIsEmailValid(userData.isEmailValid);
         setIsUsernameValid(userData.isUsernameValid);

@@ -53,7 +53,7 @@ function LoginPage(props) {
     <div style={{marginTop: "50px"}}>
           <div className="col-6 offset-3" >
             {!isUserExist &&
-                <ErrorMsg msg="User Account doen not exist." class="alert alert-danger"></ErrorMsg>
+                <ErrorMsg msg="User Account doen not exist." style="alert alert-danger"></ErrorMsg>
             }
             <div className="loginText">
                 <span>Enter username and password to login.</span>
