@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getEventList } from "../../../store/event-action";
+import { eventActions } from "../../../store/event-slice";
 
 import "./EventListPage.css";
 
@@ -18,6 +19,14 @@ function EventListPage(props) {
 
     const getEventType = function (type) {
         return type === "normal" ? "Normal" : "Premium";
+    }
+
+    const onDeleteEvent = function (id) {
+        const updatedList = eventList.filter((event) => {
+            return event.id !== id
+        });
+
+        dispatch(eventActions.setEvents(updatedList));
     }
 
     return (
@@ -50,8 +59,8 @@ function EventListPage(props) {
                                     </div>
                                 </div>
                                 <div className="align-box-content col-7">
-                                <span><button className="edit btn btn-primary" onClick={() => onEditEvent(event)}>Edit</button></span>
-                                <span><button className="delete btn btn-secondary">Delete</button></span>
+                                    <span><button className="edit btn btn-primary" type="button" onClick={() => onEditEvent(event)}>Edit</button></span>
+                                    <span><button className="delete btn btn-secondary" type="button" onClick={() => onDeleteEvent(event.id)}>Delete</button></span>
                                 </div>
                             </div>
                         )

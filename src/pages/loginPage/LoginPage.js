@@ -35,7 +35,7 @@ function LoginPage(props) {
     }
 
     const onLogin = function () {
-        const user = validateUser(email, password, "", userList);
+        const user = validateUser(email, password, "", userList, false);
         setIsEmailValid(user.isEmailValid);
         setIsPasswordValid(user.isPasswordValid);
         setIsUserExist(user.isUserExist);
